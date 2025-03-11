@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+    </style>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home Page</title>
+  </head>
+  <body>
+    <h1>URL Shortener</h1>
+
+    <% if (locals.user) { %>
+      <p>Welcome, <%= locals.user.name %>!</p>
+      <form action="/user/logout" method="GET">
+        <button type="submit">Logout</button>
+      </form>
+    <% } else { %>
+      <a href="/login">Login</a>
+    <% } %>
+
+    <div>
+      <form method="POST" action="/url">
+        <label>Enter Your Original URL</label>
+        <input type="text" name="url" placeholder="https://example.com" required />
+        <button type="submit">Generate</button>
+      </form>
+    </div>
+
+    <% if (locals.id) { %>
+      <p>New URL Generated: <a href="http://localhost:8001/url/<%= locals.id %>" target="_blank">
+        http://localhost:8001/url/<%= locals.id %>
+      </a></p>
+    <% } %>
+
+    <div style="margin-top: 30px">
+      <% if (locals.urls && locals.urls.length) { %>
+      <h2>Previously Generated Links</h2>
+      <table border="1" cellpadding="5" cellspacing="0">
+        <thead>
+          <th>S. No</th>
+          <th>Short URL</th>
+          <th>Original URL</th>
+          <th>Clicks</th>
+        </thead>
+        <tbody>
+          <% locals.urls.forEach((url, index) => { %>
+          <tr>
+            <td><%= index + 1 %></td>
+            <td>
+              <a href="http://localhost:8001/url/<%= url.shortId %>" target="_blank">
+                <%= url.shortId %>
+              </a>
+            </td>
+            <td><a href="<%= url.redirectURL %>" target="_blank"><%= url.redirectURL %></a></td>
+            <td><%= url.visitHistory.length %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+      <% } %>
+    </div>
+  </body>
+</html>

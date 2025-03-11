@@ -1,0 +1,14 @@
+{
+  "name": "cluster_module",
+  "version": "1.0.0",
+  "description": "- Multiple users concurrently accesing the server then Workload increases.\r - When users increases then we can use clusters.\r - We distribute the workload on server into multiple apllication threads of nodejs.",
+  "main": "main.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
